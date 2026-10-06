@@ -1,0 +1,11 @@
+"""Defensive recommendations, prioritized by potential impact."""
+from .findings_engine import generate_privacy_findings
+TEXT = {
+ "phone_public":"Limit phone-number visibility where the platform allows; do not enter the number in this assessment.","email_public":"Hide personal email from public profile fields and prefer a separate contact channel.","birthday_public":"Remove or restrict the full birth date; consider hiding the year too.","realtime_location":"Avoid broadcasting current location publicly. Share after leaving when practical.","travel_plans_public":"Post travel details after returning and review audience settings.","mfa_enabled":"Enable MFA using the strongest supported method and store recovery codes safely.","tag_review_enabled":"Enable tag review and restrict who can tag or mention you.","third_party_apps_reviewed":"Review connected apps and revoke unused or over-permissioned access.","verification_codes_shared":"Never share verification codes; legitimate support should not ask for them.","old_posts_reviewed":"Review older public posts and restrict or remove content that reveals unnecessary details.","unknown_connections":"Verify unfamiliar profiles through a trusted channel before accepting.","posts_public":"Review the audience for each post and choose the smallest suitable audience.","password_manager":"Use a reputable password manager to create unique passwords.","login_alerts_enabled":"Enable login alerts and review unfamiliar sessions promptly.","geotagging":"Disable geotagging when location metadata is not needed.","privacy_settings_reviewed":"Schedule a periodic privacy-settings review because platform controls change.",}
+def generate_recommendations(responses, scores):
+    recs=[]
+    for f in generate_privacy_findings(responses,scores):
+        priority="IMMEDIATE" if f["field"] in {"verification_codes_shared","realtime_location","mfa_enabled"} else "IMPORTANT" if f["severity"]=="HIGH" or f["field"] in {"phone_public","birthday_public","third_party_apps_reviewed"} else "GOOD PRACTICE"
+        recs.append({"field":f["field"],"priority":priority,"risk":f["description"],"recommendation":TEXT.get(f["field"],"Review this setting and reduce unnecessary public exposure.")})
+    order={"IMMEDIATE":0,"IMPORTANT":1,"GOOD PRACTICE":2}
+    return sorted(recs,key=lambda x:order[x["priority"]])

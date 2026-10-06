@@ -1,0 +1,3 @@
+# Screenshot and proof checklist
+
+Use synthetic answers; hide assessment IDs when sharing. Suggested filenames: `01-project-structure.png`, `02-architecture.png`, `03-homepage.png`, `04-questionnaire-profile.png`, `05-questionnaire-location.png`, `06-questionnaire-security.png`, `07-risk-score.png`, `08-category-chart.png`, `09-findings.png`, `10-recommendations.png`, `11-simulator-before-after.png`, `12-dashboard.png`, `13-checklist.png`, `14-html-report.png`, `15-synthetic-dataset.png`, `16-test-results.png`, `17-database-schema.png`, `18-github-repository.png`, `19-readme.png`, `20-commit-history.png`.
